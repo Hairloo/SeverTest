@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+    <title>Приемка поставок</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            padding: 20px 0;
+        }
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            max-width: 100%; /* Add this line */
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        button {
+            background-color: #4CAF50; /* Зеленый */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            transition-duration: 0.4s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+            color: white;
+        }
+    </style>
+</head>
+<body layout:fragment="body">
+<main>
+    <div>
+        <h1>Приемка поставок</h1>
+        <form role="form" method="post" th:action="@{/delivery/create}" th:object="${deliveryDtoRequest}" >
+            <label for="supplierName">Поставщик:</label><br>
+            <select field="*{supplierName}" id="supplierName" name="supplierName">
+                <option th:each="supplier : ${suppliers}" th:value="${supplier.name}" th:text="${supplier.name}">Первый поставщик</option>
+            </select><br>
+            <div id="productContainer">
+                <div th:each="product, iter: ${products}">
+                        <label th:text="${products[__${iter.index}__].name}">Продукт:</label><br>
+<!--                        <label for="q">Количество:</label><br>-->
+<!--                        <input th:field="*{quantities[__${iter.index}__]}" id="q" type="number" placeholder="0" min="0" required><br>-->
+<!--                        <label for="p">Цена:</label><br>-->
+<!--                        <input th:field="*{prices[__${iter.index}__]}" id="p" type="number" step="any" placeholder="0" min="0" required><br>-->
+
+                        <label for="q">Количество:</label><br>
+                        <input th:field="*{deliveryProducts[__${iter.index}__].quantity}" id="q" type="number" placeholder="0" min="0" required><br>
+                        <label for="p">Цена:</label><br>
+                        <input th:field="*{deliveryProducts[__${iter.index}__].price}" id="p" type="number" step="any" placeholder="0" min="0" required><br>
+                    </div>
+                </div>
+            <label for="date">Дата поставки:</label><br>
+            <input field="*{date}" type="date" id="date" name="date" required><br>
+            <input type="submit" value="Отправить">
+        </form>
+    </div>
+</main>
+</body>
+</html>

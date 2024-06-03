@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отчет по поставкам</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .container h1 {
+            margin-bottom: 20px;
+        }
+        .container input[type="date"] {
+            padding: 10px;
+            margin: 10px 0;
+            width: calc(100% - 22px);
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .container button:hover {
+            background-color: #45a049;
+        }
+        .container .icon {
+            font-size: 50px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        #navbar {
+            background-color: #388e3c;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+    </style>
+</head>
+<body layout:fragment="body">
+<div class="container">
+    <i class="fas fa-truck-loading icon"></i>
+    <h1>Сформировать отчет по поставкам</h1>
+    <form role="form" method="post" th:action="@{/report/generate}" th:object="${generateReportDtoRequest}">
+        <label for="startDate">С какой даты:</label><br>
+        <input field="*{startDate}" id="startDate" name="startDate" type="date" required><br>
+        <label for="endDate">По какую дату:</label><br>
+        <input field="*{endDate}" id="endDate" name="endDate" type="date" required><br>
+        <button type="submit">Сформировать отчет</button>
+    </form>
+</div>
+</body>
+</html>

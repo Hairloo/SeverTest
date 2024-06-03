@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отчет о поставках</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1200px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #388e3c;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #c8e6c9;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #a5d6a7;
+            color: #2e7d32;
+        }
+        tr:nth-child(even) {
+            background-color: #e8f5e9;
+        }
+        tfoot {
+            font-weight: bold;
+            background-color: #c8e6c9;
+        }
+    </style>
+</head>
+<body layout:fragment="body">
+<div class="container">
+    <h1>Отчет о поставках</h1>
+    <table th:object="${report}">
+        <thead>
+        <tr>
+            <th>Поставщик</th>
+            <th>Номер поставки</th>
+            <th>Продукт</th>
+            <th>Дата поставки</th>
+            <th>Цена</th>
+            <th>Вес</th>
+            <th>Количество</th>
+        </tr>
+        </thead>
+        <tbody th:each="delivery : ${report.deliveryDtoResponseList}">
+        <tr th:each="deliveryProduct: ${delivery.deliveryProducts}">
+            <td th:text="${delivery.supplier.name}">Поставщик 1</td>
+            <td th:text="${delivery.id}">1</td>
+            <td th:text="${deliveryProduct.product.name}">Продукт A</td>
+            <td th:text="${delivery.date}">2024-01-01</td>
+            <td th:text="${deliveryProduct.price}">1000 руб</td>
+            <td th:text="${deliveryProduct.product.weight}">500 кг</td>
+            <td th:text="${deliveryProduct.quantity}">50г</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="4">Итог</td>
+            <td th:text="${report.totalPrice}">2500 руб</td>
+            <td th:text="${report.totalWeight}">800 кг</td>
+            <td th:text="${report.totalQuantity}">800 кг</td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+</body>
+</html>
